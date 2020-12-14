@@ -1,19 +1,19 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 //model user
-const User=require('../../models/user')
+const User = require("../models/user");
 // model verification
-const verificationcode = require("../../models/verificationcode");
+const verificationcode = require("../models/verificationcode");
 //bcrypt
 const bcrypt = require("bcrypt");
 //jwt
 const jwt = require("jsonwebtoken");
 //key
-const { JWT_SECRET } = require("../../key");
+const { JWT_SECRET } = require("../key");
 //clientID
-const key = require("../../key");
+const key = require("../key");
 // email
-const { sendEmail } = require("../../services/email");
+const { sendEmail } = require("../services/email");
 //uuid
 const { v4: uuidv4 } = require("uuid");
 // Moments
@@ -21,23 +21,22 @@ const moment = require("moment");
 
 
 
-
 // ================== Signup router ====================
-router.post('/admin/signup', async (req, res) => {
+router.post('/signup', async (req, res) => {
     try {
         //=========== Destructuring the req body ========================
         const { fullname, email, password } = req.body;
         //========== finding user =====================================
-        const user = await User.findOne({ email: email });
+        const user = await User.findOne({ email: email,role:"user" });
 
-        if (user) return res.status(422).json({ error: "Admin already exists" });
+        if (user) return res.status(422).json({ error: "User already exists" });
         //password hashing
         const Password = await bcrypt.hash(password, 12);
         const newUser = new User({
             fullname,
             email,
             password: Password,
-            role: "admin",
+            role: "user",
         });
 
         await newUser.save();
@@ -66,7 +65,7 @@ router.post('/admin/signup', async (req, res) => {
 //=============================================================================
 
 //================================= Email Activation ==========================
-router.post("/admin/email-activation", async (req, res, next) => {
+router.post("/email-activation", async (req, res, next) => {
     try {
         const verification = await verificationcode.findOne({
             code: req.body.code,
@@ -97,13 +96,12 @@ router.post("/admin/email-activation", async (req, res, next) => {
 );
 //=============================================================================
 
-
 // ================== Signin router ====================
-router.post('/admin/signin', (req, res) => {
+router.post('/signin', (req, res) => {
     const { email, password } = req.body;
-    User.findOne({ email: email }).exec((err, user) => {
+    User.findOne({ email: email,role:"user" }).exec((err, user) => {
         if (err) return res.status(422).json({ error: "Invalid email" });
-        if (user && user.role === "admin") {
+        if (user && user.role === "user") {
             bcrypt.compare(password, user.password).then(doMatch => {
                 if (doMatch) {
                     //jwt token auth
@@ -129,7 +127,7 @@ router.post('/admin/signin', (req, res) => {
 //==============================================================================
 
 //============================== Forgot password ===============================
-router.post("/admin/forgot-password", async (req, res) => {
+router.post("/forgot-password", async (req, res) => {
     try {
         const user = await User.findOne({ email: req.body.email });
         if (!user) return res.status(422).json({ message: "User not found !!!" });

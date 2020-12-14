@@ -2,12 +2,18 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
+const cookieSession = require("cookie-session");
 var logger = require('morgan');
 var mongoose = require('mongoose');
-var {MONGOURI}=require('./key')
+var { MONGOURI } = require('./key');
+var passport = require("passport");
+
 
 var indexRouter = require('./routes/index');
-var adminAuthRouter=require('./routes/admin/auth')
+var registerRouter = require('./routes/register');
+var googleRouter = require('./routes/google');
+var adminAuthRouter = require('./routes/admin/auth');
+var userAuthRouter = require('./routes/auth');
 var usersRouter = require('./routes/users');
 var aboutRouter = require('./routes/about');
 
@@ -44,14 +50,26 @@ mongoose
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
+// For an actual app you should configure this with an experation time, better keys, proxy and secure
+app.use(cookieSession({
+    name: 'tuto-session',
+    keys: ['key1', 'key2']
+}))
+  /////////////////////////////////////////
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+// Initializes passport and passport sessions
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', indexRouter);
+app.use('/register', registerRouter);
+app.use('/', googleRouter);
 app.use('/auth', adminAuthRouter);
+app.use('/auth', userAuthRouter);
 app.use('/users', usersRouter);
 app.use('/about', aboutRouter);
 
