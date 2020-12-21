@@ -1,63 +1,101 @@
-<body>
-  <section>
-    <div class="container">
-      <div class="user signinBx">
-        <div class="imgBx">
-          <img
-            src="https://images.unsplash.com/photo-1562497702-fc536785e611?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxzZWFyY2h8ODR8fGtlcmFsYSUyMDQwMCo1MDB8ZW58MHx8MHw%3D&auto=format&fit=crop&w=500&q=60"
-            alt=""
-          />
-        </div>
-        <div class="formBx">
-          <form action="" onsubmit="return false;">
-            <h1>
-              Welcome to Bluetours
-            </h1>
-            <a href="/google" class="btn btn-danger">
-              <span class="fa fa-google-plus"></span>
-              Google
-            </a>
-            <h2>
-              Sign In
-            </h2>
-            <input type="email" name="" placeholder="Email address" />
-            <input type="password" name="" placeholder="Password" />
-            <input type="submit" name="" value="Login" />
-            <p class="signup">
-              Don't have an account ?
-              <a href="#" onclick="toggleForm();">
-                Sign Up
-              </a>
-            </p>
-          </form>
+<div class="signinform">
+  <h1>
+    Welcome to Bluetours
+  </h1>
+  <!-- container -->
+  <div class="container">
+    <!-- main content -->
+    <div class="w3l-form-info">
+      <div class="w3l_form">
+        <div class="left_grid_info">
+          <img src="/images/sideimage.svg" alt="" />
         </div>
       </div>
-      <div class="user signupBx">
-        <div class="formBx">
-          <form action="" onsubmit="return false;">
-            <h2>
-              Create an account
-            </h2>
-            <input type="text" name="" placeholder="Fullname" />
-            <input type="email" name="" placeholder="Email Address" />
-            <input type="password" name="" placeholder="Create Password" />
-            <input type="password" name="" placeholder="Confirm Password" />
-            <input type="submit" name="" value="Sign Up" />
-            <p class="signup">
-              Already have an account ?
-              <a href="#" onclick="toggleForm();">
-                Sign in
-              </a>
-            </p>
-          </form>
+      <div class="w3_info">
+        <h2>
+          Sign In
+        </h2>
+        <form action="/signin" method="post">
+          <div class="input-group">
+            <span>
+              <i class="fas fa-user" aria-hidden="true"></i>
+            </span>
+            <input
+              type="email"
+              placeholder="Email or Username"
+              required="true"
+              name="email"
+            />
+          </div>
+          <div class="input-group">
+            <span>
+              <i class="fas fa-key" aria-hidden="true"></i>
+            </span>
+            <input
+              type="password"
+              placeholder="Password"
+              required="true"
+              name="password"
+            />
+          </div>
+          <div class="form-row bottom">
+            <div class="form-check">
+              <input
+                type="checkbox"
+                id="remenber"
+                name="remenber"
+                value="remenber"
+              />
+              <label for="remenber">
+                Remember me?
+              </label>
+            </div>
+            <a href="#" class="forgot">
+              Forgot password?
+            </a>
+          </div>
+          <button class="btn btn-primary btn-block" type="submit">
+            Sign In
+          </button>
+        </form>
+        <p class="continue">
+          <span>
+            or Sign in with
+          </span>
+        </p>
+        <div class="social-login">
+          <a href="#facebook">
+            <div class="facebook">
+              <span class="fab fa-facebook" aria-hidden="true"></span>
+              Facebook
+            </div>
+          </a>
+          <a href="/google">
+            <div class="google">
+              <span class="fab fa-google-plus-g" aria-hidden="true"></span>
+              Google
+            </div>
+          </a>
         </div>
-        <div class="imgBx">
-          <img
-            src="https://images.unsplash.com/photo-1576586488520-8d5a353ab564?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTE1fHxrZXJhbGElMjA0MDAqNTAwfGVufDB8fDB8&auto=format&fit=crop&w=500&q=60"
-            alt=""
-          />
-        </div>
+        <p class="account">
+          Don't have an account?
+          <a href="/signup">
+            Sign up
+          </a>
+        </p>
       </div>
     </div>
-  </section>
-</body>
+    <!-- //main content -->
+  </div>
+  <!-- //container -->
+  <!-- footer -->
+  <div class="footer">
+    <p>
+      © 2021 Bluetours. All Rights Reserved | Design by
+      <a href="https://jishnusatheesh.tk" target="blank">
+        Jishnu
+      </a>
+    </p>
+  </div>
+  <!-- footer -->
+</div>

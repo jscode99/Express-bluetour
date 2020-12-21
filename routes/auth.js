@@ -56,6 +56,7 @@ router.post('/signup', async (req, res) => {
         res
             .status(200)
             .json({ success: "Check your email & verify email address !!" });
+        console.log("check your email address")
         //catching database error
     } catch (error) {
         console.log(error);
@@ -115,6 +116,7 @@ router.post('/signin', (req, res) => {
                     //DESTRUCTURING THE USER
                     const { _id, role, email } = user;
                     res.status(200).json({ token: token, user: { _id, role, email } });
+                    console.log("sucess");
                 } else {
                     return res.status(422).json({ message: "Invalid email or password" });
                 }
