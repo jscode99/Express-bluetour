@@ -131,7 +131,7 @@ router.post('/admin/signin', (req, res) => {
 //============================== Forgot password ===============================
 router.post("/admin/forgot-password", async (req, res) => {
     try {
-        const user = await User.findOne({ email: req.body.email });
+        const user = await User.findOne({ email: req.body.email,role:"admin" });
         if (!user) return res.status(422).json({ message: "User not found !!!" });
         // Forgot password link creation
         const verify = new verificationcode({

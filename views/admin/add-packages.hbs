@@ -1,0 +1,84 @@
+<section>
+  <div class="container">
+    <h2 style="text-align: center; margin-bottom:45px;">
+      Add Packages
+    </h2>
+    <form
+      action="/admin/add-packages"
+      method="POST"
+      enctype="multipart/form-data"
+    >
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputEmail4">
+            Name
+          </label>
+          <input
+            type="text"
+            class="form-control"
+            id="inputEmail4"
+            placeholder="Name"
+            name="name"
+          />
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputPassword4">
+            Price
+          </label>
+          <input
+            type="number"
+            class="form-control"
+            id="inputPassword4"
+            placeholder="Price"
+            name="price"
+          />
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="exampleFormControlTextarea1" class="form-label">
+          Package Description
+        </label>
+        <textarea
+          class="form-control"
+          id="exampleFormControlTextarea1"
+          rows="3"
+          name="description"
+        ></textarea>
+      </div>
+      <div class="form-group">
+        <label for="inputState">
+          Category
+        </label>
+        <select id="inputState" name="category" class="form-control">
+          <option selected>
+            Choose..
+          </option>
+          <option value="Cochin">
+            Cochin
+          </option>
+          <option value="Munnar">
+            Munnar
+          </option>
+          <option value="Alleppey">
+            Alleppey
+          </option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="formFileMultiple" class="form-label">
+          Itinerary
+        </label>
+        <input
+          name="image"
+          class="form-control"
+          type="file"
+          id="formFileMultiple"
+          multiple
+        />
+      </div>
+      <button type="submit" class="btn btn-primary">
+        Upload Package
+      </button>
+    </form>
+  </div>
+</section>
