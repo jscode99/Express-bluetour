@@ -8,13 +8,11 @@ var mongoose = require("mongoose");
 var { MONGOURI } = require("./key");
 var passport = require("passport");
 var hbs = require("express-handlebars");
-var fileUpload = require('express-fileupload');
+var fileUpload = require("express-fileupload");
 
 // Router
 var indexRouter = require("./routes/index");
 var adminRouter = require("./routes/admin");
-var adminregisterRouter = require("./routes/adminregister");
-var adminsignupRouter = require("./routes/adminsignup");
 var googleRouter = require("./routes/google");
 var adminAuthRouter = require("./routes/admin/auth");
 var userAuthRouter = require("./routes/auth");
@@ -79,13 +77,11 @@ app.use(express.static(path.join(__dirname, "public")));
 // Initializes passport and passport sessions
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(fileUpload())
+app.use(fileUpload());
 //////////////////////////////////////////////////////////
 
 app.use("/", indexRouter);
 app.use("/", adminRouter);
-app.use("/", adminregisterRouter);
-app.use("/", adminsignupRouter);
 app.use("/", registerRouter);
 app.use("/", signupRouter);
 app.use("/", googleRouter);

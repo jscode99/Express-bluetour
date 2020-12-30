@@ -1,114 +1,51 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
+var {
+  adminMiddleware,
+  requireSignin,
+} = require("../common-middleware/RequiresSign");
+var createProduct = require("../helpers/product-helpers");
+var multer = require("multer");
+var shortid = require("shortid");
+var path = require("path");
 
-/* GET users listing. */
-router.get('/admin', function (req, res, next) {
-   let products = [
-     {
-       name: "Lobster Bisque",
-       price: "$100",
-       description: "Ithoru poli sadhnm ahnn myr",
-       images: "images/Bluetours.png",
-       category: "filter-starters",
-     },
-     {
-       name: "Lobster Bisque",
-       price: "$100",
-       description: "Ithoru poli sadhnm ahnn myr",
-       images: "images/Bluetours.png",
-       category: "filter-starters",
-     },
-     {
-       name: "Lobster Bisque",
-       price: "$100",
-       description: "Ithoru poli sadhnm ahnn myr",
-       images: "images/Bluetours.png",
-       category: "filter-starters",
-     },
-     {
-       name: "Lobster Bisque",
-       price: "$100",
-       description: "Ithoru poli sadhnm ahnn myr",
-       images: "images/Bluetours.png",
-       category: "filter-starters",
-     },
-     {
-       name: "Lobster Bisque",
-       price: "$100",
-       description: "Ithoru poli sadhnm ahnn myr",
-       images: "images/Bluetours.png",
-       category: "filter-salads",
-     },
-     {
-       name: "Lobster Bisque",
-       price: "$100",
-       description: "Ithoru poli sadhnm ahnn myr",
-       images: "images/Bluetours.png",
-       category: "filter-salads",
-     },
-     {
-       name: "Lobster Bisque",
-       price: "$100",
-       description: "Ithoru poli sadhnm ahnn myr",
-       images: "images/Bluetours.png",
-       category: "filter-salads",
-     },
-     {
-       name: "Lobster Bisque",
-       price: "$100",
-       description: "Ithoru poli sadhnm ahnn myr",
-       images: "images/Bluetours.png",
-       category: "filter-salads",
-     },
-     {
-       name: "Lobster Bisque",
-       price: "$100",
-       description: "Ithoru poli sadhnm ahnn myr",
-       images: "images/Bluetours.png",
-       category: "filter-salads",
-     },
-     {
-       name: "Lobster Bisque",
-       price: "$100",
-       description: "Ithoru poli sadhnm ahnn myr",
-       images: "images/Bluetours.png",
-       category: "filter-salads",
-     },
-     {
-       name: "Lobster Bisque",
-       price: "$100",
-       description: "Ithoru poli sadhnm ahnn myr",
-       images: "images/Bluetours.png",
-       category: "filter-specialty",
-     },
-     {
-       name: "Lobster Bisque",
-       price: "$100",
-       description: "Ithoru poli sadhnm ahnn myr",
-       images: "images/Bluetours.png",
-       category: "filter-specialty",
-     },
-     {
-       name: "Lobster Bisque",
-       price: "$100",
-       description: "Ithoru poli sadhnm ahnn myr",
-       images: "images/Bluetours.png",
-       category: "filter-specialty",
-     },
-   ];
-  res.render('admin/view-packages',{products})
+//======================== Multer ================================
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.join(path.dirname(__dirname), "uploads"));
+  },
+  filename: function (req, file, cb) {
+    cb(null, shortid.generate() + "-" + file.originalname);
+  },
 });
 
+const upload = multer({ storage });
+//===============================================================
 
-// Add packages
-
-router.get('/admin/add-packages', (req, res) => {
-  res.render('admin/add-packages')
+/* GET packages listing. */
+router.get("/admin", function (req, res, next) {
+  res.render("admin/view-packages");
 });
 
-router.post('/admin/add-packages', (req, res) => {
-  console.log(req.body);
-  console.log(req.files.image);
-})
+// Get Request Add Packages
+router.get(
+  "/admin/add-packages",
+  requireSignin,
+  adminMiddleware,
+  (req, res) => {
+    res.render("admin/add-packages");
+  },
+);
+
+// Post Request Add Packages
+router.post(
+  "/admin/add-packages",
+  adminMiddleware,
+  requireSignin,
+  upload.array("productPictures"),
+  (req, res) => {
+    createProduct;
+  },
+);
 
 module.exports = router;
