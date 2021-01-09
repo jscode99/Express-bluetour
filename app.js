@@ -19,6 +19,7 @@ var userAuthRouter = require("./routes/auth");
 var homeRouter = require("./routes/home");
 var registerRouter = require("./routes/register");
 var signupRouter = require("./routes/signup");
+var userRouter = require('./routes/user');
 
 var app = express();
 
@@ -88,6 +89,7 @@ app.use("/", googleRouter);
 app.use("/", adminAuthRouter);
 app.use("/", userAuthRouter);
 app.use("/", homeRouter);
+app.use("/", userRouter);
 //////////////////////////////////////////////////////////
 
 //catch 404 and forward to error handler

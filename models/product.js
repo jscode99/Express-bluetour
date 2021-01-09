@@ -8,11 +8,6 @@ const productSchema = new mongoose.Schema(
       required: true,
       max: 25,
     },
-    slug: {
-      type: String,
-      unique: true,
-      required: true,
-    },
     price: {
       type: Number,
       trim: true,
@@ -25,23 +20,18 @@ const productSchema = new mongoose.Schema(
     offer: {
       type: Number,
     },
-    category: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Category",
-      required: true,
-    },
-    productPictures: [
-      {
-        img: {
-          type: String,
-        },
-      },
-    ],
-    createdBy: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
+    // productPictures: [
+    //   {
+    //     img: {
+    //       type: String,
+    //     },
+    //   },
+    // ],
+    // createdBy: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "User",
+    //   required: true,
+    // },
     updatedAt: Date,
   },
   { timestamps: true },

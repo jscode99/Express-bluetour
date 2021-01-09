@@ -1,17 +1,17 @@
 //model user
-const User = require("../../models/user");
+const User = require('../models/user');
 // model verification
-const verificationcode = require("../../models/verificationcode");
+const verificationcode = require("../models/verificationcode");
 //bcrypt
 const bcrypt = require("bcrypt");
 //jwt
 const jwt = require("jsonwebtoken");
 //key
-const { JWT_SECRET } = require("../../key");
+const { JWT_SECRET } = require("../key");
 //clientID
-const key = require("../../key");
+const key = require("../key");
 // email
-const { sendEmail } = require("../../services/email");
+const { sendEmail } = require("../services/email");
 //uuid
 const { v4: uuidv4 } = require("uuid");
 // Moments
@@ -23,16 +23,16 @@ exports.signup = async (req, res) => {
     //=========== Destructuring the req body ========================
     const { fullname, email, password } = req.body;
     //========== finding user =====================================
-    const user = await User.findOne({ email: email, role: "admin" });
+    const user = await User.findOne({ email: email, role: "user" });
 
-    if (user) return res.status(422).json({ error: "Admin already exists" });
+    if (user) return res.status(422).json({ error: "User already exists" });
     //password hashing
     const Password = await bcrypt.hash(password, 12);
     const newUser = new User({
       fullname,
       email,
       password: Password,
-      role: "admin",
+      role: "user",
     });
 
     await newUser.save();
@@ -93,9 +93,9 @@ exports.emailActivation = async (req, res, next) => {
 // ================== Signin router ====================
 exports.sigin = (req, res) => {
   const { email, password } = req.body;
-  User.findOne({ email: email, role: "admin" }).exec((err, user) => {
+  User.findOne({ email: email, role: "user" }).exec((err, user) => {
     if (err) return res.status(422).json({ error: "Invalid email" });
-    if (user && user.role === "admin") {
+    if (user && user.role === "user") {
       bcrypt.compare(password, user.password).then(doMatch => {
         if (doMatch) {
           //jwt token auth
@@ -124,8 +124,8 @@ exports.sigin = (req, res) => {
 //============================== Forgot password ===============================
 exports.forgotPassword = async (req, res) => {
   try {
-    const user = await User.findOne({ email: req.body.email, role: "admin" });
-    if (!user) return res.status(422).json({ message: "Admin not found !!!" });
+    const user = await User.findOne({ email: req.body.email, role: "user" });
+    if (!user) return res.status(422).json({ message: "User not found !!!" });
     // Forgot password link creation
     const verify = new verificationcode({
       code: uuidv4(),
